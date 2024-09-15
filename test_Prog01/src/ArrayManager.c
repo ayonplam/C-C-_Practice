@@ -9,7 +9,7 @@ CreateArray(int size) {
     }
     return arr;
 }
-/*Print Array*/
+/*Print Array */
 void
 PrintArray(int* arr, int SizeOfArray) {
     if (SizeOfArray == 0) {
