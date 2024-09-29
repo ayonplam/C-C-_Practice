@@ -1,2 +1,4 @@
 # ignore ALL files in ANY directory named .vscode
 .vscode/
+# ignore ALL files exe
+*.exe
