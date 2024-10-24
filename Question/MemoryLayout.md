@@ -1,7 +1,7 @@
 **1.** Text Segment (Code Segment) read and execute, no write
     1.1.
     - Lưu hằng số, con trỏ kiểu char
-    - char *str = "Hello World" là chuỗi hằng, được lưu trữ trong một vùng bộ nhớ bất biến (read only) hoặc code segment
+    - char *str = "Hello World" là chuỗi hằng, được lưu trữ trong một vùng bộ nhớ bất biến (read only) hoặc code segment. nhưng str được lưu ở data.
 
 **2.** Data Segment
     2.1.
@@ -31,6 +31,10 @@
     - Nếu kích thước mới lớn hơn, dữ liệu sẽ được chuyển sang vùng nhớ mới.
     - Nếu kích thước mới nhỏ hơn, phần bộ nhớ thừa được giải phóng.
     - Khi sử dụng realloc nên lưu tạm con trỏ để tránh trường hợp realloc ko cấp phát được, trả về NULL và con trỏ sẽ được gán bằng NULL
+
+
+    **Note: Không thể sử dụng malloc globally (bên ngoài hàm main). Vì on global chỉ có thể khai báo, ko thể call function.
+            Vì thế khi gọi malloc và dùng con trỏ gán vào thì con trỏ đó lưu ở stack.
 
 
 
