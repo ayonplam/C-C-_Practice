@@ -74,15 +74,14 @@ extern "C"{
 * @brief      Intialize a queue
 * @details    This function intialize a queue.
 *
+* @param[in]  MyBuffer A pointer to the ring buffer.
 * @param[in]  pQueue Pointer to memory region for a queue
 *
-* @return     Pointer to RingBufferType
+* @return     void
 */
-RingBufferType * RingBuff_Init(NoteType * pQueue)
+void RingBuff_Init(RingBufferType * MyBuffer, NoteType * pQueue)
 {
-    RingBufferType * MyBuffer;
-
-    for (int i = 0; i <= QUEUE_LEN; i++)
+    for (uint8_t i = 0; i <= QUEUE_LEN; i++)
     {
         MyBuffer->Queue[i] = pQueue + i;
     }
@@ -91,8 +90,6 @@ RingBufferType * RingBuff_Init(NoteType * pQueue)
     MyBuffer->Index   = 0;
     MyBuffer->isFull  = 0;
     MyBuffer->isEmpty = 1;
-
-    return MyBuffer;
 }
 
 /**
@@ -110,7 +107,7 @@ void RingBuff_Push (RingBufferType * MyBuffer , uint8_t Data)
     NoteType * pHeadNote = MyBuffer->Queue[MyBuffer->Head];
 
     /* Get current position for push data */
-    uint8_t * pPosition = pHeadNote->Note[MyBuffer->Index];
+    uint8_t * pPosition = pHeadNote->Note + MyBuffer->Index;
 
     /* Load data to queue */
     *pPosition = Data;

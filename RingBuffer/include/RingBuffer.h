@@ -90,11 +90,9 @@ typedef struct {
 *                                    FUNCTION PROTOTYPES
 ==================================================================================================*/
 
-RingBufferType* RingBuff_Init(NoteType * Queue);
+void RingBuff_Init(RingBufferType * MyBuffer, NoteType * pQueue);
 
 void RingBuff_Push (RingBufferType * MyBuffer , uint8_t Data);
-
-void RingBuff_Pop (RingBufferType * MyBuffer, FrameType * MyFrame);
 
 void RingBuff_Pop (RingBufferType * MyBuffer, FrameType * MyFrame);
 
