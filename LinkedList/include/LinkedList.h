@@ -1,9 +1,9 @@
 /**
-*   @file    RingBuffer.h
+*   @file    LinkedList.h
 *   @version 1.0.0
 *
-*   @brief   RingBuffer - API header
-*   @details Contains declarations of the RingBuffer API functions.
+*   @brief   LinkedList API header
+*   @details Contains declarations of the LinkedList API functions.
 *
 *   @author  Lam Nguyen Phu
 *
@@ -13,8 +13,8 @@
 *
 ==================================================================================================*/
 
-#ifndef RING_BUFFER_H
-#define RING_BUFFER_H
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
 
 #ifdef __cplusplus
 extern "C"{
@@ -23,7 +23,6 @@ extern "C"{
 *                                        INCLUDE FILES
 ==================================================================================================*/
 #include <stdint.h>
-#include <stdbool.h>
 
 /*==================================================================================================
 *                              SOURCE FILE VERSION INFORMATION
@@ -43,9 +42,10 @@ extern "C"{
 /*==================================================================================================
 *                                      DEFINES AND MACROS
 ==================================================================================================*/
-#define QUEUE_LEN 4U   /* Queue has 4 Node */
-#define NODE_SIZE 256U /* 256 bytes */
+#define E_OK      0x00
+#define E_NOT_OK  0x01U
 
+#define NOT_EXIST NULL
 /*==================================================================================================
 *                                             ENUMS
 ==================================================================================================*/
@@ -55,31 +55,19 @@ extern "C"{
 *                                STRUCTURES AND OTHER TYPEDEFS
 ==================================================================================================*/
 /**
- * @brief This structure describes a Node of ring buffer
+* @brief This type can be used as standard API return type which is shared between the RTE and the
+*        BSW modules.
+*/
+/* @implements Std_ReturnType_type */
+typedef uint8_t Std_ReturnType;
+
+/**
+ * @brief This structure describes a note of linked list
  */
-typedef struct {
-    uint8_t Node[NODE_SIZE];
+typedef struct Node {
+    uint64_t Data;
+    struct Node * pNext;
 } NodeType;
-
-/**
- * @brief This structure describes a example frame to save a Node (pop)
- */
-typedef struct {
-    uint8_t Frame[NODE_SIZE];
-} FrameType;
-
-/**
- * @brief This structure describes a ring buffer structure
- */
-
-typedef struct {
-    NodeType * Queue[QUEUE_LEN];
-    uint16_t Head;  /* increase head when push a new line */
-    uint16_t Tail;  /* increse tail when pop a new line */
-    uint16_t Index; /* current index in a elemnent */
-    bool isFull;    /* flag check queue is full, = 1 */
-    bool isEmpty;   /* flag check queue is empty, = 1 */
-} RingBufferType;
 
 /*==================================================================================================
 *                                GLOBAL VARIABLE DECLARATIONS
@@ -90,16 +78,22 @@ typedef struct {
 *                                    FUNCTION PROTOTYPES
 ==================================================================================================*/
 
-void RingBuff_Init(RingBufferType * MyBuffer, NodeType * pQueue);
+void PrintList( const NodeType * pNodeHead );
 
-void RingBuff_Push (RingBufferType * MyBuffer , uint8_t Data);
+NodeType* Search( NodeType * pNodeHead, uint64_t u64Value );
 
-void RingBuff_Pop (RingBufferType * MyBuffer, FrameType * MyFrame);
+Std_ReturnType AddNode_ToTail( NodeType * pNodeHead, NodeType * pNewNode);
+
+Std_ReturnType AddNode_ToHead( NodeType * pNodeHead, NodeType * pNewNode);
+
+Std_ReturnType DeleteNode( uint64_t u64Value, NodeType * pNodeHead );
+
+void SortList( NodeType * pNodeHead );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* RING_BUFFER_H */
+#endif /* LINKED_LIST_H */
 
 /** @} */

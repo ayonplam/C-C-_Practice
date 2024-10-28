@@ -79,7 +79,7 @@ extern "C"{
 *
 * @return     void
 */
-void RingBuff_Init(RingBufferType * MyBuffer, NoteType * pQueue)
+void RingBuff_Init(RingBufferType * MyBuffer, NodeType * pQueue)
 {
     for (uint8_t i = 0; i <= QUEUE_LEN; i++)
     {
@@ -103,11 +103,11 @@ void RingBuff_Init(RingBufferType * MyBuffer, NoteType * pQueue)
 */
 void RingBuff_Push (RingBufferType * MyBuffer , uint8_t Data)
 {
-    /* Get pointer of current head note */
-    NoteType * pHeadNote = MyBuffer->Queue[MyBuffer->Head];
+    /* Get pointer of current head Node */
+    NodeType * pHeadNode = MyBuffer->Queue[MyBuffer->Head];
 
     /* Get current position for push data */
-    uint8_t * pPosition = pHeadNote->Note + MyBuffer->Index;
+    uint8_t * pPosition = pHeadNode->Node + MyBuffer->Index;
 
     /* Load data to queue */
     *pPosition = Data;
@@ -141,7 +141,7 @@ void RingBuff_Push (RingBufferType * MyBuffer , uint8_t Data)
 
 /**
 * @brief      Pop data from queue.
-* @details    This function pop a note from queue.
+* @details    This function pop a Node from queue.
 *
 * @param[in]  MyBuffer A pointer to the ring buffer.
 * @param[in]  MyBuffer A pointer to the frame store data.
