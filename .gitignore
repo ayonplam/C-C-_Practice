@@ -2,3 +2,5 @@
 .vscode/
 # ignore ALL files exe
 *.exe
+# ignore ALL files in ANY directory named bin
+bin/
