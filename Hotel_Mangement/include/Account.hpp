@@ -1,9 +1,9 @@
 /**
-*   @file    LinkedList.h
+*   @file    Account.hpp
 *   @version 1.0.0
 *
-*   @brief   LinkedList API header
-*   @details Contains declarations of the LinkedList API functions.
+*   @brief   Account Management - API header
+*   @details Contains declarations of the Account Management API functions.
 *
 *   @author  Lam Nguyen Phu
 *
@@ -12,17 +12,14 @@
 /*==================================================================================================
 *
 ==================================================================================================*/
+#ifndef ACCOUNT_HPP
+#define ACCOUNT_HPP
 
-#ifndef LINKED_LIST_H
-#define LINKED_LIST_H
-
-#ifdef __cplusplus
-extern "C"{
-#endif
 /*==================================================================================================
 *                                        INCLUDE FILES
 ==================================================================================================*/
-#include <stdint.h>
+#include <string>
+#include <vector>
 /*==================================================================================================
 *                                          CONSTANTS
 ==================================================================================================*/
@@ -31,10 +28,8 @@ extern "C"{
 /*==================================================================================================
 *                                      DEFINES AND MACROS
 ==================================================================================================*/
-#define E_OK      0x00U
-#define E_NOT_OK  0x01U
 
-#define NOT_EXIST NULL
+
 /*==================================================================================================
 *                                             ENUMS
 ==================================================================================================*/
@@ -43,20 +38,35 @@ extern "C"{
 /*==================================================================================================
 *                                STRUCTURES AND OTHER TYPEDEFS
 ==================================================================================================*/
-/**
-* @brief This type can be used as standard API return type which is shared between the RTE and the
-*        BSW modules.
-*/
-/* @implements Std_ReturnType_type */
-typedef uint8_t Std_ReturnType;
 
-/**
- * @brief This structure describes a note of linked list
- */
-typedef struct Node {
-    uint64_t Data;
-    struct Node * pNext;
-} NodeType;
+
+/*==================================================================================================
+*                                        CLASS PROTOTYPES
+==================================================================================================*/
+class Account {
+private:
+    std::string username;
+    std::string password;
+
+public:
+    // Constructor mặc định và constructor có tham số
+    Account();
+    Account(const std::string& username, const std::string& password);
+
+    // Getter và Setter cho các thuộc tính
+    std::string getUsername() const;
+    std::string getPassword() const;
+
+    void setPassword(const std::string& password);
+
+    // Kiểm tra nếu tài khoản đã tồn tại trong danh sách
+    static bool accountExists(const std::vector<Account>& accountList, const std::string& username);
+
+    // Phương thức static để đăng ký và đăng nhập
+    static bool registerAccount(std::vector<Account>& accountList, const std::string& username, const std::string& password);
+    static bool login(const std::vector<Account>& accountList, const std::string& username, const std::string& password);
+
+};
 
 /*==================================================================================================
 *                                GLOBAL VARIABLE DECLARATIONS
@@ -67,22 +77,7 @@ typedef struct Node {
 *                                    FUNCTION PROTOTYPES
 ==================================================================================================*/
 
-void PrintList( const NodeType * pNodeHead );
 
-NodeType* Search( NodeType * pNodeHead, uint64_t u64Value );
-
-Std_ReturnType AddNode_ToTail( NodeType * pNodeHead, NodeType * pNewNode);
-
-Std_ReturnType AddNode_ToHead( NodeType * pNodeHead, NodeType * pNewNode);
-
-Std_ReturnType DeleteNode( uint64_t u64Value, NodeType * pNodeHead );
-
-void SortList( NodeType * pNodeHead );
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* LINKED_LIST_H */
+#endif /* ACCOUNT_H */
 
 /** @} */

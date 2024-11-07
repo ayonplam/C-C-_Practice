@@ -33,3 +33,8 @@
     - A class may have a virtual destructor but it cannot have a virtual constructor:
     constructor khởi tạo VTABLE nên ko thể có VTABLE trước constructor
     nếu ko sd virtual destructor, khi thực hiện Run Time Polymorphism và destructor một object, chỉ hàm destructor của BaseClass được gọi. (ko gọi được destructor của Derivate Class)
+
+    - Pure Virtual Function: virtual void display() = 0;
+      Hàm chứa Pure Virtual Function là class trừu tượng, ko thể definition một cách bình thường, phải sử dụng Run Time Polymorphism để định nghĩa một object.
+
+    - Kế thừa ảo giúp giải quyết vấn đề kim cương trong C++. Kế thừa ảo giúp các lớp dẫn xuất chia sẻ một bản sao duy nhất của lớp cơ sở, Nó tránh được vấn đề trùng lặp dữ liệu và các mâu thuẫn liên quan khi sử dụng đa kế thừa.

@@ -1,9 +1,11 @@
 /**
-*   @file
+*   @file    Account.cpp
 *   @version 1.0.0
 *
-*   @brief
-*   @details
+*   @brief   Account Management - API source
+*   @details This file implement the Account Management API functions.
+*
+*   @author  Lam Nguyen Phu
 *
 *   @{
 */
@@ -18,25 +20,17 @@ extern "C"{
 /*==================================================================================================
 *                                        INCLUDE FILES
 ==================================================================================================*/
-#include <stdio.h>
-#include <setjmp.h>
+#include "Account.hpp"
+
 /*==================================================================================================
 *                          LOCAL TYPEDEFS (STRUCTURES, UNIONS, ENUMS)
 ==================================================================================================*/
-typedef enum
-{
-    DIVIDE_BY_0 = 0x1U,
-} exception_code_t;
+
 
 /*==================================================================================================
 *                                       LOCAL MACROS
 ==================================================================================================*/
-#define TRY                                  \
-  if ((exception_code = setjmp( env )) == 0) \
 
-#define CATCH(x) else if ( exception_code == (x) )
-
-#define THROW(x) longjmp( env, (x) );
 
 /*==================================================================================================
 *                                      LOCAL CONSTANTS
@@ -46,9 +40,8 @@ typedef enum
 /*==================================================================================================
 *                                      LOCAL VARIABLES
 ==================================================================================================*/
-static jmp_buf env;
 
-static exception_code_t exception_code;
+
 /*==================================================================================================
 *                                      GLOBAL CONSTANTS
 ==================================================================================================*/
@@ -57,43 +50,73 @@ static exception_code_t exception_code;
 /*==================================================================================================
 *                                      GLOBAL VARIABLES
 ==================================================================================================*/
-
+std::vector<Account> accountList;
 
 /*==================================================================================================
 *                                   LOCAL FUNCTION PROTOTYPES
 ==================================================================================================*/
-double divide( int a, int b );
+
 
 /*==================================================================================================
 *                                       LOCAL FUNCTIONS
 ==================================================================================================*/
-double divide( int a, int b )
-{
-    if ( b == 0 )
-    {
-        THROW(DIVIDE_BY_0);
-    }
+// Định nghĩa biến accountList toàn cục
+std::vector<Account> accountList;  // Chỉ định biến toàn cục ở đây
 
-    return (double)(a / b);
+// Constructor mặc định
+Account::Account() : username(""), password("") {}
+
+// Constructor có tham số
+Account::Account(const std::string& username, const std::string& password)
+    : username(username), password(password) {}
+
+// Getter cho từng thuộc tính
+std::string Account::getUsername() const {
+    return username;
 }
 
-int main()
-{
-    int a = 10;
-    int b = 0;
-    double result = 0.0;
-
-    TRY
-    {
-        divide( a, b );
-    }
-    CATCH(DIVIDE_BY_0)
-    {
-        printf("Error: Divide by 0!\n");
-    }
-
-    return 0;
+std::string Account::getPassword() const {
+    return password;
 }
+
+// Setter cho từng thuộc tính
+void Account::setPassword(const std::string& password) {
+    this->password = password;
+}
+
+// Kiểm tra nếu tài khoản đã tồn tại trong danh sách
+bool Account::accountExists(const std::vector<Account>& accountList, const std::string& username) {
+        for (const auto& account : accountList) {
+            if (account.getUsername() == username) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+// Đăng ký tài khoản mới
+bool Account::registerAccount(std::vector<Account>& accountList, const std::string& username, const std::string& password) {
+    for (const auto& acc : accountList) {
+        if (acc.getUsername() == username) {
+            return false; // Tên tài khoản đã tồn tại
+        }
+    }
+    Account newAccount(username, password);
+    accountList.push_back(newAccount);
+    return true; // Đăng ký thành công
+}
+
+// Đăng nhập
+bool Account::login(const std::vector<Account>& accountList, const std::string& username, const std::string& password) {
+    for (const auto& acc : accountList) {
+        if (acc.getUsername() == username && acc.getPassword() == password) {
+            return true; // Đăng nhập thành công
+        }
+    }
+    return false; // Đăng nhập thất bại
+}
+
+
 #ifdef __cplusplus
 }
 #endif
