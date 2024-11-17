@@ -1,9 +1,9 @@
 /**
-*   @file    Manager.hpp
+*   @file    RoomManager.hpp
 *   @version 1.0.0
 *
-*   @brief   Manager - API header
-*   @details Contains declarations of the Manager API functions.
+*   @brief   RoomManager - API header
+*   @details Contains declarations of the RoomManager API functions.
 *
 *   @author  Lam Nguyen Phu
 *
@@ -12,16 +12,15 @@
 /*==================================================================================================
 *
 ==================================================================================================*/
-#ifndef MANAGER_HPP
-#define MANAGER_HPP
+#ifndef Room_MANAGER_HPP
+#define Room_MANAGER_HPP
 
 /*==================================================================================================
 *                                        INCLUDE FILES
 ==================================================================================================*/
-#include "Menu.hpp"
-#include "UI.hpp"
-#include "EmployeeManager.hpp"
-#include "RoomManager.hpp"
+#include "Room.hpp"
+#include <vector>
+#include <string>
 
 /*==================================================================================================
 *                                          CONSTANTS
@@ -34,37 +33,39 @@
 
 
 /*==================================================================================================
-*                                            CLASS
+*                                        CLASS PROTOTYPES
 ==================================================================================================*/
-class Manager {
+class RoomManager {
 public:
-    // Hiển thị menu quản lý chính
-    void showManagementMenu();
+    RoomManager() {
+        rooms_.emplace_back(101);
+        rooms_.emplace_back(102);
+        rooms_.emplace_back(103);
+        rooms_.emplace_back(104);
+        rooms_.emplace_back(105);
+        rooms_.emplace_back(201);
+        rooms_.emplace_back(202);
+        rooms_.emplace_back(203);
+        rooms_.emplace_back(204);
+        rooms_.emplace_back(205);
+        rooms_.emplace_back(301);
+        rooms_.emplace_back(302);
+        rooms_.emplace_back(303);
+        rooms_.emplace_back(304);
+        rooms_.emplace_back(305);
+    };
+
+    void addCustomerToRoom(const std::string RoomNumber, const std::string customerName, const std::string customerPhone, const std::string checkIn);
+
+    void moveCustomerFromRoom(const std::string RoomNumber, const std::string checkOut);
+
+    void checkRoom(const std::string RoomNumber);
 
 private:
-    EmployeeManager employeeManager;
-    RoomManager RoomManager;
-    // Các phương thức để quản lý từng phần
-    void manageEmployees();      // Quản lý nhân viên
-    void manageRooms();          // Quản lý phòng
-    void manageServices();       // Quản lý dịch vụ
+    std::vector<Room> rooms_;
 
-    // Các phương thức cụ thể cho từng hành động
-    void addEmployee();          // Thêm nhân viên
-    void editEmployee();         // Sửa thông tin nhân viên
-    void deleteEmployee();       // Xóa nhân viên
-    void listEmployees();        // Liệt kê nhân viên
-    void updateShift();          // Cập nhật giờ làm
-
-    void addRoom();              // Thêm phòng
-    void editRoom();             // Sửa thông tin phòng
-    void deleteRoom();           // Xóa phòng
-    void listRooms();            // Liệt kê phòng
-
-    void addService();           // Thêm dịch vụ
-    void editService();          // Sửa thông tin dịch vụ
-    void deleteService();        // Xóa dịch vụ
-    void listServices();         // Liệt kê dịch vụ
+    // Find Room by Room number
+    Room* findRoomByNumber(const std::string RoomNumber);
 };
 
 /*==================================================================================================
@@ -77,6 +78,6 @@ private:
 ==================================================================================================*/
 
 
-#endif /* MANAGER_HPP */
+#endif /* Room_MANAGER_HPP */
 
 /** @} */

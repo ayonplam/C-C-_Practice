@@ -1,40 +1,53 @@
-# Tên file thực thi
-TARGET = Hotel_Management
+ifeq ($(PROG_NAME),)
+    $(error "Pls export PROG_NAME")
+endif
 
-# Thư mục chứa file header, file nguồn và file thực thi
-INCDIR = $(TARGET)/include
-SRCDIR = $(TARGET)/src
-BINDIR = ../output
+INCLUDE_DIR = $(PROG_NAME)/include
+SOURCE_DIR  = $(PROG_NAME)/src
+OUTPUT_DIR  = ../output/$(PROG_NAME)
+LAUNCH_FILE = .vscode/launch.json
 
-# Tìm tất cả các file nguồn .cpp trong thư mục SRCDIR
-SRCS = $(wildcard $(SRCDIR)/*.cpp)
+EXECUTABLE_NAME = program
 
-# Tạo danh sách các file object .o tương ứng trong thư mục BINDIR
-OBJS = $(SRCS:$(SRCDIR)/%.cpp=$(BINDIR)/%.o)
+CC = g++
 
-# Compiler và các flags cho compiler
-CXX = g++
-CXXFLAGS = -Wall -std=c++11 -I$(INCDIR)
+C_WARNINGS = -g -Wall -Wextra -Wpedantic
+CFLAGS = -I $(INCLUDE_DIR)
+C_COMPILER_CALL = $(CC) $(C_WARNINGS) $(CFLAGS)
 
-# Rule mặc định để biên dịch chương trình
-all: $(BINDIR)/$(TARGET)
+C_SOURCES = $(wildcard $(SOURCE_DIR)/*.cpp)
+C_OBJECTS = $(patsubst $(SOURCE_DIR)/%.cpp, $(OUTPUT_DIR)/%.o, $(C_SOURCES))
 
-# Tạo thư mục bin nếu chưa tồn tại
-$(BINDIR):
-	mkdir -p $(BINDIR)
+$(info $(C_SOURCES))
 
-# Rule để tạo file thực thi trong thư mục bin
-$(BINDIR)/$(TARGET): $(OBJS) | $(BINDIR)
-	$(CXX) $(CXXFLAGS) -o $(BINDIR)/$(TARGET) $(OBJS)
+#############
+## TARGETS ##
+#############
+$(OUTPUT_DIR):
+	mkdir -p $@
 
-# Rule để tạo các file object (.o) trong thư mục bin từ file source (.cpp)
-$(BINDIR)/%.o: $(SRCDIR)/%.cpp | $(BINDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+build: ./$(OUTPUT_DIR)/$(EXECUTABLE_NAME).exe
 
-# Rule để dọn dẹp các file biên dịch
+./$(OUTPUT_DIR)/$(EXECUTABLE_NAME).exe: $(C_OBJECTS)
+	$(C_COMPILER_CALL) $(C_OBJECTS) -o $(OUTPUT_DIR)/$(EXECUTABLE_NAME)
+
+execute:
+	./$(OUTPUT_DIR)/$(EXECUTABLE_NAME)
+
 clean:
-	rm -f $(BINDIR)/*.o $(BINDIR)/$(TARGET)
+	rm -f $(OUTPUT_DIR)/*.o
+	rm -f $(OUTPUT_DIR)/$(EXECUTABLE_NAME)
 
-# Rule để chạy chương trình từ thư mục bin
-run: all
-	./$(BINDIR)/$(TARGET)
+SET_LAUNCH_JSON:
+	sed -i 's/output\\\\.*\\\\program/output\\\\\\\\$(PROG_NAME)\\\\\\\\program/g' $(LAUNCH_FILE)
+
+##############
+## PATTERNS ##
+##############
+$(OUTPUT_DIR)/%.o: $(SOURCE_DIR)/%.cpp $(OUTPUT_DIR)
+	$(C_COMPILER_CALL) -c $< -o $@
+
+###########
+## PHONY ##
+###########
+.PHONY: build execute clean

@@ -1,0 +1,11 @@
+#ifndef RTE_THERMAL_MANAGEMENT_H
+#define RTE_THERMAL_MANAGEMENT_H
+
+#include "Std_Types.h"
+#include <stddef.h>
+
+Std_ReturnType Rte_Read_RpTemperatureSensor_ActualTemperature(float* Temperature_Motor, float* Temperature_Cooler);
+
+Std_ReturnType Rte_Call_RpTemperatureSensor_Init(void);
+
+#endif /* RTE_THERMAL_MANAGEMENT_H */

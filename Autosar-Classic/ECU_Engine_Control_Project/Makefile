@@ -1,9 +1,9 @@
 # Compiler and flags
 CC = gcc
 CFLAGS = -Wall -g\
--I.\BSW\ECU_Abstraction\IoHwAb\
--I.\BSW\MCAL\
--I.\BSW\Services\
+-I.\BSW\ECU_Abstraction\IoHwAb\include\
+-I.\BSW\MCAL\include\
+-I.\BSW\Services\include\
 -I.\RTE\
 -I.\SWC
 # Object directory
@@ -11,22 +11,25 @@ OBJDIR = bin
 # Executable
 TARGET = $(OBJDIR)/ecu
 
-SRC = .\BSW\ECU_Abstraction\IoHwAb\IoHwAb_LoadSensor.c \
-.\BSW\ECU_Abstraction\IoHwAb\IoHwAb_MotorDriver.c \
-.\BSW\ECU_Abstraction\IoHwAb\IoHwAb_SpeedSensor.c \
-.\BSW\ECU_Abstraction\IoHwAb\IoHwAb_ThrottleSensor.c \
-.\BSW\ECU_Abstraction\IoHwAb\IoHwAb_TorqueSensor.c \
-.\BSW\MCAL\Adc.c \
-.\BSW\MCAL\Can.c \
-.\BSW\MCAL\Dio.c \
-.\BSW\MCAL\Pwm.c \
-.\BSW\Services\Dcm.c \
-.\BSW\Services\Dem.c \
-.\BSW\Services\Mem.c \
-.\BSW\Services\Os.c \
-.\BSW\Services\Pdu_Router.c \
+SRC = .\BSW\ECU_Abstraction\IoHwAb\src\IoHwAb_LoadSensor.c \
+.\BSW\ECU_Abstraction\IoHwAb\src\IoHwAb_MotorDriver.c \
+.\BSW\ECU_Abstraction\IoHwAb\src\IoHwAb_SpeedSensor.c \
+.\BSW\ECU_Abstraction\IoHwAb\src\IoHwAb_TemperatureSensor.c \
+.\BSW\ECU_Abstraction\IoHwAb\src\IoHwAb_ThrottleSensor.c \
+.\BSW\ECU_Abstraction\IoHwAb\src\IoHwAb_TorqueSensor.c \
+.\BSW\MCAL\src\Adc.c \
+.\BSW\MCAL\src\Can.c \
+.\BSW\MCAL\src\Dio.c \
+.\BSW\MCAL\src\Pwm.c \
+.\BSW\Services\src\Dcm.c \
+.\BSW\Services\src\Dem.c \
+.\BSW\Services\src\Mem.c \
+.\BSW\Services\src\Os.c \
+.\BSW\Services\src\Pdu_Router.c \
 .\Main.c \
+.\RTE\Rte_ThermalManagement.c \
 .\RTE\Rte_TorqueControl.c \
+.\SWC\Thermal_Management.c \
 .\SWC\Torque_Control.c 
 
 # Object files

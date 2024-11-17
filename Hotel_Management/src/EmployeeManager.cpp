@@ -19,6 +19,7 @@
 ==================================================================================================*/
 #include "EmployeeManager.hpp"
 #include "UI.hpp"
+#include <windows.h>
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
@@ -90,6 +91,7 @@ void EmployeeManager::addEmployee(std::vector<Account>& accountList, const std::
     // Kiểm tra nếu số điện thoại đã tồn tại trong hệ thống tài khoản
     if (Account::accountExists(accountList, phoneNumber)) {
         UI::showMessage("Số điện thoại này đã được đăng ký.");
+        Sleep(3000);//3000ms
         return;
     }
 
@@ -103,6 +105,7 @@ void EmployeeManager::addEmployee(std::vector<Account>& accountList, const std::
     // Tự động đăng ký tài khoản cho nhân viên với mật khẩu mặc định
     Account::registerAccount(accountList, phoneNumber, "123456");
     UI::showMessage("Tài khoản cho nhân viên đã được đăng ký với mật khẩu mặc định '123456'.");
+    Sleep(3000);//3000ms
 }
 
 // Sửa thông tin nhân viên dựa trên Id
@@ -115,6 +118,7 @@ void EmployeeManager::editEmployeeById(const std::string& id, const std::string&
     } else {
         UI::showMessage("Không tìm thấy nhân viên với ID này.");
     }
+    Sleep(3000);//3000ms
 }
 
 // Tìm nhân viên theo id
@@ -139,6 +143,7 @@ void EmployeeManager::deleteEmployeeById(const std::string& id) {
     } else {
         UI::showMessage("Không tìm thấy nhân viên với ID này.");
     }
+    Sleep(3000);//3000ms
 }
 
 // Đặt ca làm việc cho nhân viên
@@ -146,11 +151,13 @@ void EmployeeManager::setWorkShift(const std::string& id, const std::string& shi
     Employee* employee = findEmployeeById(id);
     if (employee == nullptr) {
         UI::showMessage("Không tìm thấy nhân viên với ID: " + id);
+        Sleep(3000);//3000ms
         return;
     }
 
     employee->setWorkShift(shift);
     UI::showMessage("Ca làm việc của nhân viên " + employee->getName() + " đã được cập nhật thành công thành: " + shift);
+    Sleep(3000);//3000ms
 }
 
 

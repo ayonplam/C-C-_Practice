@@ -174,9 +174,8 @@ void Manager::listEmployees() {
 void Manager::manageRooms() {
     Menu roomMenu("Quản lý phòng", {
         {1, "Thêm phòng", [this]() { addRoom(); }},
-        {2, "Sửa thông tin phòng", [this]() { editRoom(); }},
-        {3, "Xóa phòng", [this]() { deleteRoom(); }},
-        {4, "Xem danh sách phòng", [this]() { listRooms(); }},
+        {2, "Xóa phòng", [this]() { deleteRoom(); }},
+        {3, "Xem danh sách phòng", [this]() { listRooms(); }},
         {0, "Quay lại", []() { UI::showMessage("Quay lại menu quản lý..."); }}
     });
 
