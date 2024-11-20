@@ -17,6 +17,7 @@ SRC = .\BSW\ECU_Abstraction\IoHwAb\src\IoHwAb_LoadSensor.c \
 .\BSW\ECU_Abstraction\IoHwAb\src\IoHwAb_TemperatureSensor.c \
 .\BSW\ECU_Abstraction\IoHwAb\src\IoHwAb_ThrottleSensor.c \
 .\BSW\ECU_Abstraction\IoHwAb\src\IoHwAb_TorqueSensor.c \
+.\BSW\ECU_Abstraction\IoHwAb\src\IoHwAb_WaterPump.c \
 .\BSW\MCAL\src\Adc.c \
 .\BSW\MCAL\src\Can.c \
 .\BSW\MCAL\src\Dio.c \
